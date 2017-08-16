@@ -98,17 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.orlando:
-                showMapOrlando();
-                return true;
-            case R.id.winter_park:
-                showMapOrlando();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        // Show Store Information Activity
+        return true;
     }
 
     private void showMapOrlando() {
