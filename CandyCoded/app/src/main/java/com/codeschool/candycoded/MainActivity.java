@@ -5,25 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.ArrayList;
 
+import com.codeschool.candycoded.DB.CandyContract.CandyEntry;
+import com.codeschool.candycoded.DB.CandyCursorAdapter;
+import com.codeschool.candycoded.DB.CandyDbHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import cz.msebera.android.httpclient.Header;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import com.codeschool.candycoded.CandyContract.CandyEntry;
+import cz.msebera.android.httpclient.Header;
 
 
 
@@ -84,6 +87,43 @@ public class MainActivity extends AppCompatActivity {
                         adapter.changeCursor(cursor);
                     }
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.orlando:
+                showMapOrlando();
+                return true;
+            case R.id.winter_park:
+                showMapOrlando();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showMapOrlando() {
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St, Orlando, FL 32801");
+
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        // Make the Intent explicit by setting the Google Maps package
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        // Attempt to start an activity that can handle the Intent
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 
     private void addCandiesToDatabase(Candy[] candies) {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/file"
+        android:title="Locations" >
+        <!-- "file" submenu -->
+        <menu>
+            <item android:id="@+id/orlando"
+                android:title="Orlando" />
+            <item android:id="@+id/winter_park"
+                android:title="Winter Park" />
+        </menu>
+    </item>
+</menu>

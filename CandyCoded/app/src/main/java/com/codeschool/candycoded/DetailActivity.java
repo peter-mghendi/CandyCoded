@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codeschool.candycoded.CandyContract.CandyEntry;
+import com.codeschool.candycoded.DB.CandyContract;
+import com.codeschool.candycoded.DB.CandyContract.CandyEntry;
+import com.codeschool.candycoded.DB.CandyDbHelper;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
