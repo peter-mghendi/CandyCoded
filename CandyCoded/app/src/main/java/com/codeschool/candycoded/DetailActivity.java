@@ -8,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,17 +59,6 @@ public class DetailActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) this.findViewById(
                     R.id.image_view_candy);
             Picasso.with(this).load(mCandyImageUrl).into(imageView);
-
-            // ***
-            // Project Task 3
-            // ***
-            Button shareButton = (Button)findViewById(R.id.button_share);
-            shareButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createShareIntent();
-                }
-            });
         }
     }
 
@@ -82,22 +69,31 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
+    // ***
+    // Task 4 - Share the Current Candy with an Intent
+    // ***
+    // (1) Override the onOptionsItemSelected() method
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Share the Candy with an Intent
+
         createShareIntent();
+        // (2) return true
         return true;
     }
 
-    // ***
-    // Project Task 2
-    // ***
+    // (3) Since there is a big chunk of code to create the Intent let's do it in a separate method
+    // Create a method called...
     private void createShareIntent() {
+        // (4) Create an Intent called shareIntent with action ACTION_SEND
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        // (5) Use the Intent's setType() method to set the type to "text/plain".
         shareIntent.setType("text/plain");
+        // (6) Use the Intent's putExtra() method to add the text we want to share.
+        // The first paramether is the type of content Intent.EXTRA_TEXT, and the second is our String ...
         shareIntent.putExtra(Intent.EXTRA_TEXT,
                 SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED);
-
+        // (7) We can now call startActivity() with our Intent
         startActivity(shareIntent);
+        // (8) finally we want to go back to onOptionsItemSelected() and call the method we just wrote.
     }
 }

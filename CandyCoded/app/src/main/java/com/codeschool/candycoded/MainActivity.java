@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -95,28 +94,18 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main, menu);
         return true;
     }
-
+    // ***
+    // Task 1 - Show Store Information Activity
+    // ***
+    // (1) Override the onOptionsItemSelected() method to create the Intent to open the InfoActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Show Store Information Activity
+        // (2) Create the Intent to create the InfoActivity
         Intent infoIntent = new Intent(MainActivity.this, InfoActivity.class);
+        // (3) Call startActivity() with the Intent as a paramemter to start our Intent.
         startActivity(infoIntent);
+        // (4) the method needs to return a boolean, we will return true to mean that we launched our Intent
         return true;
-    }
-
-    private void showMapOrlando() {
-        // Create a Uri from an intent string. Use the result to create an Intent.
-        Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St, Orlando, FL 32801");
-
-        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        // Make the Intent explicit by setting the Google Maps package
-        mapIntent.setPackage("com.google.android.apps.maps");
-
-        // Attempt to start an activity that can handle the Intent
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(mapIntent);
-        }
     }
 
     private void addCandiesToDatabase(Candy[] candies) {
