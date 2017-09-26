@@ -38,9 +38,6 @@ public class Task1Tests {
         // Create a fake Bundle to pass in.
         Bundle bundle = Mockito.mock(Bundle.class);
 
-
-
-
         try {
             // Do not allow super.onCreate() to be called, as it throws errors before the user's code.
             PowerMockito.suppress(PowerMockito.methodsDeclaredIn(AppCompatActivity.class));
