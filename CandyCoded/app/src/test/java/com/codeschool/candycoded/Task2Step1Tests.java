@@ -37,7 +37,7 @@ public class Task2Step1Tests {
         infoActivity = PowerMockito.spy(new InfoActivity());
         // Create a fake Bundle to pass in.
         Bundle bundle = mock(Bundle.class);
-
+        Uri mockUri = mock(Uri.class);
         try {
             // Do not allow super.onCreate() to be called, as it throws errors before the user's code.
             PowerMockito.suppress(PowerMockito.methodsDeclaredIn(AppCompatActivity.class));
@@ -51,7 +51,12 @@ public class Task2Step1Tests {
             // Creating the mockUri - can we check if mockUri has this info?
             //when(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801")).thenReturn(mockUri);
             PowerMockito.mockStatic(Uri.class);
-            infoActivity.createMapIntent(null);
+            PowerMockito.doReturn(mockUri).when(Uri.class);
+            try {
+                infoActivity.createMapIntent(null);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
             PowerMockito.verifyStatic(Uri.class);
             Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"); // This has to come on the line after mockStatic
             //when(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801")).thenReturn(actualUri);
