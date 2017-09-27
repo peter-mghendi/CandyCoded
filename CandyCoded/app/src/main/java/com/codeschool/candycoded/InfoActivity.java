@@ -32,10 +32,12 @@ public class InfoActivity extends AppCompatActivity {
         // (2) Create a Uri from the address
         Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
         // (3) Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        // PROBLEM - mapIntent is null
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         //Intent emptyIntent = new Intent();
         // (4) Make the Intent explicit by setting the Google Maps package
-        //mapIntent.setPackage("com.google.android.apps.maps");
+        // PROBLEM - get null pointer exception here
+        mapIntent.setPackage("com.google.android.apps.maps");
         // (5) We will attempt to start an activity that can handle the Intent.  To do this create an if
         // statement, inside call mapIntent.resolveActivity(getPackageManager()) and make sure the result
         // is not equal to null
