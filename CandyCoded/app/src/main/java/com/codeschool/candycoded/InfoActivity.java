@@ -41,10 +41,10 @@ public class InfoActivity extends AppCompatActivity {
         // (5) We will attempt to start an activity that can handle the Intent.  To do this create an if
         // statement, inside call mapIntent.resolveActivity(getPackageManager()) and make sure the result
         // is not equal to null
-        //if (mapIntent.resolveActivity(getPackageManager()) != null) {
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
             // (6) Inside the if statement we can call startActivity() with our mapIntent
-        //    startActivity(mapIntent);
-        //}
+            startActivity(mapIntent);
+        }
         // (7) Now we need to connect this method to the button click....
         // Go into activity_info.xml and add the following properties to the TextView with the id
         // text_view_address - android:clickable="true" and android:onClick="createMapIntent"

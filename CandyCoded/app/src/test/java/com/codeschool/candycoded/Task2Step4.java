@@ -1,6 +1,8 @@
 package com.codeschool.candycoded;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,19 +19,21 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@PrepareForTest({AppCompatActivity.class, Uri.class, Intent.class})
+@PrepareForTest({AppCompatActivity.class, Intent.class, Uri.class, InfoActivity.class})
 @RunWith(PowerMockRunner.class)
-public class Task2Tests {
+public class Task2Step4 {
 
     private static InfoActivity infoActivity;
-    //private static Uri mockUri = mock(Uri.class);
-    private static boolean called_startActivity = false;
     private static boolean called_uri_parse = false;
     private static boolean created_intent = false;
     private static boolean created_intent_correctly = false;
+    private static boolean set_package = false;
+    private static boolean resolve_activity = false;
+    private static boolean called_startActivity_correctly = false;
 
     // Mockito setup
     @BeforeClass
@@ -41,21 +45,21 @@ public class Task2Tests {
         Uri mockUri = mock(Uri.class);
         //Uri actualUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
         //Uri spyUri = PowerMockito.spy(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"));
-        Intent intent = PowerMockito.spy(new Intent(Intent.ACTION_VIEW, mockUri));
+
+        PackageManager mockPackageManager = mock(PackageManager.class);
+        ComponentName mockComponentName = mock(ComponentName.class);
+        Intent actualIntent = new Intent(Intent.ACTION_VIEW, mockUri);
+        Intent intent = PowerMockito.spy(actualIntent);
 
         try {
             // Do not allow super.onCreate() to be called, as it throws errors before the user's code.
             PowerMockito.suppress(PowerMockito.methodsDeclaredIn(AppCompatActivity.class));
 
-            // Return a mocked Intent from the call to its constructor.
-//            Intent mockMapIntent = mock(Intent.class);
-//
-//            PowerMockito.whenNew(Intent.class).withParameterTypes(
-//                    String.class,
-//                    Uri.class)
-//                    .withArguments(Mockito.any(String.class), Mockito.any(Uri.class)).thenReturn(mockMapIntent);
 
+            // PROBLEM - this is not helping to make the mapIntent not null in createMapIntent()
             PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(intent);
+
+            //PowerMockito.when(intent, "setPackage", "com.google.android.apps.maps").thenReturn(intent);
 
             try {
                 infoActivity.onCreate(bundle);
@@ -63,32 +67,42 @@ public class Task2Tests {
                 e.printStackTrace();
             }
 
-            // Creating the mockUri - can we check if mockUri has this info?
-            //when(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801")).thenReturn(mockUri);
+            PowerMockito.doReturn(mockPackageManager).when(infoActivity, "getPackageManager");
+            PowerMockito.doReturn(mockComponentName).when(intent, "resolveActivity", mockPackageManager);
+
+            //View mockView = mock(View.class);
             PowerMockito.mockStatic(Uri.class);
-            infoActivity.createMapIntent(null);
+            //PowerMockito.doReturn(mockUri).when(Uri.class);
+            PowerMockito.when(Uri.class, "parse", "geo:0,0?q=618 E South St Orlando, FL 32801").thenReturn(mockUri);
+            try {
+                infoActivity.createMapIntent(null);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
             PowerMockito.verifyStatic(Uri.class);
             Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"); // This has to come on the line after mockStatic
             //when(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801")).thenReturn(actualUri);
             called_uri_parse = true;
 
-            try {
-                PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(Intent.ACTION_VIEW), Mockito.any());
-                created_intent = true;
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
+            PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).
+                    withArguments(Mockito.eq(Intent.ACTION_VIEW), Mockito.eq(mockUri));
+            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withNoArguments();
+            created_intent = true;
 
 
+            verify(intent).setPackage("com.google.android.apps.maps");
+            set_package = true;
+
+            verify(intent).resolveActivity(mockPackageManager);
+            resolve_activity = true;
+
+            Mockito.verify(infoActivity).startActivity(Mockito.eq(intent));
+            called_startActivity_correctly = true;
 
 
         } catch (Throwable e) {
             e.printStackTrace();
-
-            // Need to replace doThrow() above with using verify on startActivity - see aj's code
-            //called_startActivity = true;
         }
-        //Mockito.verify(infoActivity).startActivity(mapIntent);
     }
 
     @Test
@@ -109,7 +123,7 @@ public class Task2Tests {
     @Test
     public void t2_2_createGeoUri() throws Exception {
         // Was hoping we could check that the mockUri is equivalent to this one below
-        Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
+        //Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
 
         //assertNotNull(mockUri);
         assertTrue(called_uri_parse);
@@ -120,10 +134,21 @@ public class Task2Tests {
         assertTrue(created_intent);
     }
 
-    //@Test
-    //public void t2_3_callStartActivity() throws Exception {
-    //    assertTrue(called_startActivity);
-    //}
+    @Test
+    public void t2_4_setPackage() throws Exception {
+        assertTrue(set_package);
+    }
+
+    @Test
+    public void t2_5_resolveActivity() throws Exception {
+        assertTrue(resolve_activity);
+    }
+
+    @Test
+    public void t2_6_no_startActivity_call() {
+        assertTrue(called_startActivity_correctly);
+    }
 
 
 }
+
