@@ -3,29 +3,22 @@ package com.codeschool.candycoded;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeschool.candycoded.DB.CandyContract.CandyEntry;
-import com.codeschool.candycoded.DB.CandyCursorAdapter;
 import com.codeschool.candycoded.DB.CandyDbHelper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.TextHttpResponseHandler;
 
-import cz.msebera.android.httpclient.Header;
+import java.util.ArrayList;
 
 
 
@@ -38,6 +31,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ArrayList<String> candy_list = new ArrayList<String>();
+
+        candy_list.add("Tropical Wave");
+        candy_list.add("Berry Bouncer");
+        candy_list.add("Grape Gummer");
+        candy_list.add("Apple of My Eye");
+        candy_list.add("Much Minty");
+        candy_list.add("So Fresh");
+        candy_list.add("Sassy Sandwich Cookie");
+        candy_list.add("Uni-pop");
+        candy_list.add("Strawberry Surprise");
+        candy_list.add("Wish Upon a Star");
+        candy_list.add("Planetary Pops");
+        candy_list.add("Watermelon Like Whoa");
+        candy_list.add("Twist 'n' Shout");
+        candy_list.add("Beary Squad Goals");
+        candy_list.add("ROYGBIV Spinner");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.list_item_candy,
+                R.id.text_view_candy,
+                candy_list
+        );
+/*
         TextView textView = (TextView)this.findViewById(R.id.text_view_title);
         textView.setText(R.string.products_title);
 
@@ -45,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery("SELECT * FROM candy", null);
 
         final CandyCursorAdapter adapter = new CandyCursorAdapter(this, cursor);
-
+*/
         ListView listView = (ListView)this.findViewById(R.id.list_view_candy);
 
         listView.setAdapter(adapter);
@@ -53,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         Context context = this;
         String text = "Hello toast!";
         int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        //Toast toast = Toast.makeText(context, text, duration);
+        //toast.show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        /*AsyncHttpClient client = new AsyncHttpClient();
         client.get("https://vast-brushlands-23089.herokuapp.com/main/api",
                 new TextHttpResponseHandler() {
                     @Override
@@ -83,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
                         SQLiteDatabase db = candyDbHelper.getWritableDatabase();
                         Cursor cursor = db.rawQuery("SELECT * FROM candy", null);
-                        adapter.changeCursor(cursor);
+                        //adapter.changeCursor(cursor);
                     }
-                });
+                });*/
     }
 
     @Override

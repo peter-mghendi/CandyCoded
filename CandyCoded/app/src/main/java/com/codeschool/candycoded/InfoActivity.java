@@ -33,15 +33,16 @@ public class InfoActivity extends AppCompatActivity {
         Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
         // (3) Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        //Intent emptyIntent = new Intent();
         // (4) Make the Intent explicit by setting the Google Maps package
-        mapIntent.setPackage("com.google.android.apps.maps");
+        //mapIntent.setPackage("com.google.android.apps.maps");
         // (5) We will attempt to start an activity that can handle the Intent.  To do this create an if
         // statement, inside call mapIntent.resolveActivity(getPackageManager()) and make sure the result
         // is not equal to null
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+        //if (mapIntent.resolveActivity(getPackageManager()) != null) {
             // (6) Inside the if statement we can call startActivity() with our mapIntent
-            startActivity(mapIntent);
-        }
+        //    startActivity(mapIntent);
+        //}
         // (7) Now we need to connect this method to the button click....
         // Go into activity_info.xml and add the following properties to the TextView with the id
         // text_view_address - android:clickable="true" and android:onClick="createMapIntent"

@@ -9,7 +9,6 @@ import android.view.View;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -22,7 +21,7 @@ import static org.mockito.Mockito.mock;
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @PrepareForTest({AppCompatActivity.class, Uri.class, Intent.class})
 @RunWith(PowerMockRunner.class)
-public class Task2Tests {
+public class Task2Step1Tests {
 
     private static InfoActivity infoActivity;
     //private static Uri mockUri = mock(Uri.class);
@@ -38,24 +37,10 @@ public class Task2Tests {
         infoActivity = PowerMockito.spy(new InfoActivity());
         // Create a fake Bundle to pass in.
         Bundle bundle = mock(Bundle.class);
-        Uri mockUri = mock(Uri.class);
-        //Uri actualUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
-        //Uri spyUri = PowerMockito.spy(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"));
-        Intent intent = PowerMockito.spy(new Intent(Intent.ACTION_VIEW, mockUri));
 
         try {
             // Do not allow super.onCreate() to be called, as it throws errors before the user's code.
             PowerMockito.suppress(PowerMockito.methodsDeclaredIn(AppCompatActivity.class));
-
-            // Return a mocked Intent from the call to its constructor.
-//            Intent mockMapIntent = mock(Intent.class);
-//
-//            PowerMockito.whenNew(Intent.class).withParameterTypes(
-//                    String.class,
-//                    Uri.class)
-//                    .withArguments(Mockito.any(String.class), Mockito.any(Uri.class)).thenReturn(mockMapIntent);
-
-            PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(intent);
 
             try {
                 infoActivity.onCreate(bundle);
@@ -72,23 +57,10 @@ public class Task2Tests {
             //when(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801")).thenReturn(actualUri);
             called_uri_parse = true;
 
-            try {
-                PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(Intent.ACTION_VIEW), Mockito.any());
-                created_intent = true;
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-
-
-
 
         } catch (Throwable e) {
             e.printStackTrace();
-
-            // Need to replace doThrow() above with using verify on startActivity - see aj's code
-            //called_startActivity = true;
         }
-        //Mockito.verify(infoActivity).startActivity(mapIntent);
     }
 
     @Test
@@ -115,15 +87,6 @@ public class Task2Tests {
         assertTrue(called_uri_parse);
     }
 
-    @Test
-    public void t2_3_createIntent() throws Exception {
-        assertTrue(created_intent);
-    }
-
-    //@Test
-    //public void t2_3_callStartActivity() throws Exception {
-    //    assertTrue(called_startActivity);
-    //}
 
 
 }
