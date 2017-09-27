@@ -1,6 +1,8 @@
 package com.codeschool.candycoded;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,13 +25,15 @@ import static org.mockito.Mockito.verify;
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @PrepareForTest({AppCompatActivity.class, Intent.class, Uri.class, InfoActivity.class})
 @RunWith(PowerMockRunner.class)
-public class Task2Step3 {
+public class Task2 {
 
     private static InfoActivity infoActivity;
     private static boolean called_uri_parse = false;
     private static boolean created_intent = false;
     private static boolean created_intent_correctly = false;
     private static boolean set_package = false;
+    private static boolean resolve_activity = false;
+    private static boolean called_startActivity_correctly = false;
 
     // Mockito setup
     @BeforeClass
@@ -42,6 +46,8 @@ public class Task2Step3 {
         //Uri actualUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
         //Uri spyUri = PowerMockito.spy(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"));
 
+        PackageManager mockPackageManager = mock(PackageManager.class);
+        ComponentName mockComponentName = mock(ComponentName.class);
         Intent actualIntent = new Intent(Intent.ACTION_VIEW, mockUri);
         Intent intent = PowerMockito.spy(actualIntent);
 
@@ -61,6 +67,8 @@ public class Task2Step3 {
                 e.printStackTrace();
             }
 
+            PowerMockito.doReturn(mockPackageManager).when(infoActivity, "getPackageManager");
+            PowerMockito.doReturn(mockComponentName).when(intent, "resolveActivity", mockPackageManager);
 
             //View mockView = mock(View.class);
             PowerMockito.mockStatic(Uri.class);
@@ -77,13 +85,19 @@ public class Task2Step3 {
             called_uri_parse = true;
 
             PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).
-                        withArguments(Mockito.eq(Intent.ACTION_VIEW), Mockito.eq(mockUri));
-                //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withNoArguments();
+                    withArguments(Mockito.eq(Intent.ACTION_VIEW), Mockito.eq(mockUri));
+            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withNoArguments();
             created_intent = true;
 
 
             verify(intent).setPackage("com.google.android.apps.maps");
             set_package = true;
+
+            verify(intent).resolveActivity(mockPackageManager);
+            resolve_activity = true;
+
+            Mockito.verify(infoActivity).startActivity(Mockito.eq(intent));
+            called_startActivity_correctly = true;
 
 
         } catch (Throwable e) {
@@ -125,10 +139,15 @@ public class Task2Step3 {
         assertTrue(set_package);
     }
 
-    //@Test
-    //public void t2_3_callStartActivity() throws Exception {
-    //    assertTrue(called_startActivity);
-    //}
+    @Test
+    public void t2_5_resolveActivity() throws Exception {
+        assertTrue(resolve_activity);
+    }
+
+    @Test
+    public void t2_6_no_startActivity_call() {
+        assertTrue(called_startActivity_correctly);
+    }
 
 
 }

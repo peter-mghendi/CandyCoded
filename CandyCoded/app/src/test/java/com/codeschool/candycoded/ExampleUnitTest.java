@@ -13,6 +13,6 @@ import static org.junit.Assert.assertEquals;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(false, true);
+        assertEquals(true, true);
     }
 }

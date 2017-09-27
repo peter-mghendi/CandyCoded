@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.eq;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @PrepareForTest({AppCompatActivity.class})
 @RunWith(PowerMockRunner.class)
-public class Task1Tests {
+public class Task1 {
 
     private static Intent mockIntent = Mockito.mock(Intent.class);
     private static boolean called_startActivity = false;
