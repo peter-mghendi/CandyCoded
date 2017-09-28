@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import junit.framework.Assert;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +17,15 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import static org.junit.Assert.assertEquals;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -27,7 +36,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(PowerMockRunner.class)
 public class Task2 {
 
-    private static InfoActivity infoActivity;
+    public static final String LAYOUT_XML_FILE = "res/layout/activity_info.xml";
     private static boolean called_uri_parse = false;
     private static boolean created_intent = false;
     private static boolean created_intent_correctly = false;
@@ -39,12 +48,10 @@ public class Task2 {
     @BeforeClass
     public static void setup() throws Exception {
         // Spy on a MainActivity instance.
-        infoActivity = PowerMockito.spy(new InfoActivity());
+        InfoActivity infoActivity = PowerMockito.spy(new InfoActivity());
         // Create a fake Bundle to pass in.
         Bundle bundle = mock(Bundle.class);
         Uri mockUri = mock(Uri.class);
-        //Uri actualUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
-        //Uri spyUri = PowerMockito.spy(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"));
 
         PackageManager mockPackageManager = mock(PackageManager.class);
         ComponentName mockComponentName = mock(ComponentName.class);
@@ -59,34 +66,33 @@ public class Task2 {
             // PROBLEM - this is not helping to make the mapIntent not null in createMapIntent()
             PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(intent);
 
-            //PowerMockito.when(intent, "setPackage", "com.google.android.apps.maps").thenReturn(intent);
-
             try {
                 infoActivity.onCreate(bundle);
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
             PowerMockito.doReturn(mockPackageManager).when(infoActivity, "getPackageManager");
             PowerMockito.doReturn(mockComponentName).when(intent, "resolveActivity", mockPackageManager);
 
-            //View mockView = mock(View.class);
             PowerMockito.mockStatic(Uri.class);
-            //PowerMockito.doReturn(mockUri).when(Uri.class);
             PowerMockito.when(Uri.class, "parse", "geo:0,0?q=618 E South St Orlando, FL 32801").thenReturn(mockUri);
+
             try {
-                infoActivity.createMapIntent(null);
+                //infoActivity.createMapIntent(null);
+                Method myMethod =  InfoActivity.class
+                        .getMethod("createMapIntent", View.class);
+                Object[] param = {null};
+                myMethod.invoke(infoActivity, param);
             } catch (Throwable e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             PowerMockito.verifyStatic(Uri.class);
             Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801"); // This has to come on the line after mockStatic
-            //when(Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801")).thenReturn(actualUri);
             called_uri_parse = true;
 
             PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).
                     withArguments(Mockito.eq(Intent.ACTION_VIEW), Mockito.eq(mockUri));
-            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withNoArguments();
             created_intent = true;
 
 
@@ -101,54 +107,71 @@ public class Task2 {
 
 
         } catch (Throwable e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
     @Test
-    public void t2_1_createMapIntent_Exists() throws Exception {
-        Class<?> myClass = null;
+    public void test_combined() throws Exception {
+        createMapIntent_Exists();
+        assertTrue("The Uri for the map location wasn't created.", called_uri_parse);
+        assertTrue("The Intent was not created correctly.", created_intent);
+        assertTrue("The package was not set for the Intent.", set_package);
+        assertTrue("The method resolveActivity() needs to be called.", resolve_activity);
+        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
+        test_xml();
+    }
+
+    public void createMapIntent_Exists() throws Exception {
+        Method myMethod = null;
 
         try {
-            myClass =  InfoActivity.class
-                    .getMethod("createMapIntent", View.class)
-                    .getDeclaringClass();
+            myMethod =  InfoActivity.class
+                    .getMethod("createMapIntent", View.class);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
-        assertEquals(myClass, InfoActivity.class);
-    }
-
-    @Test
-    public void t2_2_createGeoUri() throws Exception {
-        // Was hoping we could check that the mockUri is equivalent to this one below
-        //Uri gmmIntentUri = Uri.parse("geo:0,0?q=618 E South St Orlando, FL 32801");
-
-        //assertNotNull(mockUri);
-        assertTrue(called_uri_parse);
-    }
-
-    @Test
-    public void t2_3_createIntent() throws Exception {
-        assertTrue(created_intent);
-    }
-
-    @Test
-    public void t2_4_setPackage() throws Exception {
-        assertTrue(set_package);
-    }
-
-    @Test
-    public void t2_5_resolveActivity() throws Exception {
-        assertTrue(resolve_activity);
-    }
-
-    @Test
-    public void t2_6_no_startActivity_call() {
-        assertTrue(called_startActivity_correctly);
+        assertNotNull("createMapIntent() method doesn't exist in InfoActivity class.", myMethod);
     }
 
 
+
+    public void test_xml() throws Exception {
+        ArrayList<XMLTestHelpers.ViewContainer> viewContainers = readLayoutXML(LAYOUT_XML_FILE);
+        XMLTestHelpers.ViewContainer addressView =
+                new XMLTestHelpers.ViewContainer("@+id/text_view_address", "createMapIntent", "true");
+        boolean address_set_correct =  viewContainers.contains(addressView);
+
+        Assert.assertTrue("In activity_info.xml, the TextView text_view_address does not have " +
+                        "the clickable and onClick properties set.",
+                address_set_correct);
+    }
+
+    public ArrayList<XMLTestHelpers.ViewContainer> readLayoutXML(String layoutFileName) {
+        InputStream inputStream = null;
+
+        ArrayList<XMLTestHelpers.ViewContainer> viewContainers = new ArrayList<XMLTestHelpers.ViewContainer>();
+
+        try {
+            inputStream = this.getClass().getClassLoader().getResourceAsStream(layoutFileName);
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(false);
+            XmlPullParser parser = factory.newPullParser();
+            parser.setInput(inputStream, null);
+            parser.nextTag();
+            viewContainers = XMLTestHelpers.readFeed(parser);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return viewContainers;
+    }
 }
 
