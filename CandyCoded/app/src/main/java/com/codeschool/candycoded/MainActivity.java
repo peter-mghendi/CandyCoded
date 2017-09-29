@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
     // (1) Override the onOptionsItemSelected() method to create the Intent to open the InfoActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // (2) Create the Intent to create the InfoActivity
+        // (3) Create the Intent to create the InfoActivity
         Intent infoIntent = new Intent(MainActivity.this, InfoActivity.class);
-        // (3) Call startActivity() with the Intent as a paramemter to start our Intent.
+        // (4) Call startActivity() with the Intent as a paramemter to start our Intent.
         startActivity(infoIntent);
-        // (4) the method needs to return a boolean, we will return true to mean that we launched our Intent
+        // (2) the method needs to return a boolean, we will return true to mean that we launched our Intent
         return true;
     }
 

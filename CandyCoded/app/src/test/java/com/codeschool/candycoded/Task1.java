@@ -1,6 +1,5 @@
 package com.codeschool.candycoded;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +22,6 @@ import static org.junit.Assert.assertTrue;
 @PrepareForTest({AppCompatActivity.class, MainActivity.class, Intent.class, InfoActivity.class})
 @RunWith(PowerMockRunner.class)
 public class Task1 {
-
-    private static Intent mockIntent = Mockito.mock(Intent.class);
     private static MainActivity activity;
 
     private static boolean onOptionsItemSelected_result = false;
@@ -53,13 +50,13 @@ public class Task1 {
             try {
                 activity.onCreate(bundle);
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
             try {
                 onOptionsItemSelected_result = activity.onOptionsItemSelected(null);
             } catch (Throwable e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
             // Check if new Intent() was called with any arguments.
@@ -67,18 +64,17 @@ public class Task1 {
                 PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withNoArguments();
                 called_Intent = true;
             } catch (Throwable e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
             try {
                 PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.any(MainActivity.class), Mockito.any(Class.class));
                 called_Intent = true;
             } catch (Throwable e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
             // Check if new Intent() was called with the correct arguments.
-            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.any(Class.class));
             PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.eq(InfoActivity.class));
             called_Intent_correctly = true;
 
@@ -86,8 +82,8 @@ public class Task1 {
             Mockito.verify(activity).startActivity(Mockito.eq(intent));
             called_startActivity = true;
 
-        }catch (ActivityNotFoundException e) {
-            e.printStackTrace();
+        }catch (Throwable e) {
+            //e.printStackTrace();
         }
     }
 
@@ -110,7 +106,7 @@ public class Task1 {
                     .getMethod("onOptionsItemSelected", MenuItem.class)
                     .getDeclaringClass();
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         assertEquals("onOptionsItemSelected() method doesn't exist in MainActivity class.",
