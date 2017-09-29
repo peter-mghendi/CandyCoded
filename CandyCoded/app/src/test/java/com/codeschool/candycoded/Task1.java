@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@PrepareForTest({AppCompatActivity.class, MainActivity.class, Intent.class})
+@PrepareForTest({AppCompatActivity.class, MainActivity.class, Intent.class, InfoActivity.class})
 @RunWith(PowerMockRunner.class)
 public class Task1 {
 
@@ -78,8 +78,8 @@ public class Task1 {
             }
 
             // Check if new Intent() was called with the correct arguments.
-            PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.any(Class.class));
-            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.eq(InfoActivity.class));
+            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.any(Class.class));
+            PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.eq(InfoActivity.class));
             called_Intent_correctly = true;
 
             // Check if startActivity() was called with the correct argument.
