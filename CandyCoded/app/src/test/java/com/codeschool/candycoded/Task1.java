@@ -17,18 +17,20 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@PrepareForTest({AppCompatActivity.class})
+@PrepareForTest({AppCompatActivity.class, MainActivity.class, Intent.class})
 @RunWith(PowerMockRunner.class)
 public class Task1 {
 
     private static Intent mockIntent = Mockito.mock(Intent.class);
-    private static boolean called_startActivity = false;
     private static MainActivity activity;
 
+    private static boolean onOptionsItemSelected_result = false;
+    private static boolean called_Intent = false;
+    private static boolean called_Intent_correctly = false;
+    private static boolean called_startActivity = false;
 
     // Mockito setup
     @BeforeClass
@@ -37,24 +39,15 @@ public class Task1 {
         activity = PowerMockito.spy(new MainActivity());
         // Create a fake Bundle to pass in.
         Bundle bundle = Mockito.mock(Bundle.class);
+        // Create a spy Intent to return from new Intent().
+        Intent intent = PowerMockito.spy(new Intent(activity, InfoActivity.class));
 
         try {
             // Do not allow super.onCreate() to be called, as it throws errors before the user's code.
             PowerMockito.suppress(PowerMockito.methodsDeclaredIn(AppCompatActivity.class));
 
-
-            PowerMockito.doThrow(new ActivityNotFoundException())
-                    .when(activity, "startActivity", Mockito.any(Intent.class));
-
-
-
-            PowerMockito.whenNew(Intent.class).withParameterTypes(
-                                                                android.content.Context.class,
-                                                                java.lang.Class.class)
-                    .withArguments(Mockito.any(android.content.Context.class), eq(InfoActivity.class)).thenReturn(mockIntent);
-
-            //Intent infoIntentFixture = new Intent(activity, InfoActivity.class);
-            //PowerMockito.whenNew(Intent.class).withParameterTypes(android.content.Context.class, InfoActivity.class).thenReturn(mockIntent);
+            // Return a mocked Intent from the call to its constructor.
+            PowerMockito.whenNew(Intent.class).withAnyArguments().thenReturn(intent);
 
             // We expect calling onCreate() to throw an Exception due to our mocking. Ignore it.
             try {
@@ -63,20 +56,51 @@ public class Task1 {
                 e.printStackTrace();
             }
 
-            activity.onOptionsItemSelected(null);
+            try {
+                onOptionsItemSelected_result = activity.onOptionsItemSelected(null);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
 
+            // Check if new Intent() was called with any arguments.
+            try {
+                PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withNoArguments();
+                called_Intent = true;
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
 
-            //called_startActivity = true;
+            try {
+                PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.any(MainActivity.class), Mockito.any(Class.class));
+                called_Intent = true;
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+
+            // Check if new Intent() was called with the correct arguments.
+            PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.any(Class.class));
+            //PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).withArguments(Mockito.eq(activity), Mockito.eq(InfoActivity.class));
+            called_Intent_correctly = true;
+
+            // Check if startActivity() was called with the correct argument.
+            Mockito.verify(activity).startActivity(Mockito.eq(intent));
+            called_startActivity = true;
 
         }catch (ActivityNotFoundException e) {
             e.printStackTrace();
-
-            called_startActivity = true;
         }
     }
 
     @Test
-    public void t1_1_OnOptionsItemSelected_Exists() throws Exception {
+    public void test_combined() throws Exception {
+        onOptionsItemSelected_Exists();
+        assertTrue("onOptionsItemSelected() does not return true.", onOptionsItemSelected_result);
+        assertTrue("The Intent was not created.", called_Intent);
+        assertTrue("The Intent was created but with the wrong parameters.", called_Intent_correctly);
+        assertTrue("The method startActivity() was not called.", called_startActivity);
+    }
+
+    public void onOptionsItemSelected_Exists() throws Exception {
         // Determine if the method OnOptionsItemSelected() is implemented in MainActivity
         // or just in the Base class
         Class<?> myClass = null;
@@ -89,34 +113,7 @@ public class Task1 {
             e.printStackTrace();
         }
 
-        assertEquals(myClass, MainActivity.class);
+        assertEquals("onOptionsItemSelected() method doesn't exist in MainActivity class.",
+                     myClass, MainActivity.class);
     }
-
-    @Test
-    public void t1_2_Call_StartActivity() throws Exception {
-        String assertionError = "";
-
-        try {
-            assertEquals(called_startActivity, true);
-        } catch (AssertionError ae) {
-            assertionError = ae.toString();
-        }
-
-        System.out.println(assertionError);
-    }
-
-    @Test
-    public void t1_3_CreateInfoIntent() throws Exception {
-        String assertionError = "";
-
-        try {
-            //Mockito.verify(activity).startActivity(mockIntent);
-            assertNotEquals(mockIntent, null);
-        } catch (AssertionError ae) {
-            assertionError = ae.toString();
-        }
-
-        System.out.println(assertionError);
-    }
-
 }
