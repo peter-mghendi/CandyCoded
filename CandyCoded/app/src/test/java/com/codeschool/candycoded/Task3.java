@@ -112,7 +112,7 @@ public class Task3 {
             //e.printStackTrace();
         }
 
-        assertNotNull("createMapIntent() method doesn't exist in InfoActivity class.", myMethod);
+        assertNotNull("createPhoneIntent() method doesn't exist in InfoActivity class.", myMethod);
     }
 
     public void test_xml() throws Exception {

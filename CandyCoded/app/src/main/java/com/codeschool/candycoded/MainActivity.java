@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -81,18 +80,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     // ***
-    // Task 1 - Show Store Information Activity
+    // TODO - Task 1 - Show Store Information Activity
     // ***
-    // (1) Override the onOptionsItemSelected() method to create the Intent to open the InfoActivity
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // (3) Create the Intent to create the InfoActivity
-        Intent infoIntent = new Intent(MainActivity.this, InfoActivity.class);
-        // (4) Call startActivity() with the Intent as a paramemter to start our Intent.
-        startActivity(infoIntent);
-        // (2) the method needs to return a boolean, we will return true to mean that we launched our Intent
-        return true;
-    }
 
     private void addCandiesToDatabase(Candy[] candies) {
         SQLiteDatabase db = candyDbHelper.getWritableDatabase();

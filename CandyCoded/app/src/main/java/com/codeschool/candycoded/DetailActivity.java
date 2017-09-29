@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -70,29 +69,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     // ***
-    // Task 4 - Share the Current Candy with an Intent
+    // TODO - Task 4 - Share the Current Candy with an Intent
     // ***
-    // (1) Override the onOptionsItemSelected() method
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // (4)
-        createShareIntent();
-        // (2) return true
-        return true;
-    }
-
-    // (3) Since there is a big chunk of code to create the Intent let's do it in a separate method
-    // Create a method called...
-    private void createShareIntent() {
-        // (5) Create an Intent called shareIntent with action ACTION_SEND
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        // (6) Use the Intent's setType() method to set the type to "text/plain".
-        shareIntent.setType("text/plain");
-        // (7) Use the Intent's putExtra() method to add the text we want to share.
-        // The first paramether is the type of content Intent.EXTRA_TEXT, and the second is our String ...
-        shareIntent.putExtra(Intent.EXTRA_TEXT,
-                SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED);
-        // (8) We can now call startActivity() with our Intent
-        startActivity(shareIntent);
-    }
 }
