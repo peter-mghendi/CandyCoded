@@ -75,7 +75,7 @@ public class DetailActivity extends AppCompatActivity {
     // (1) Override the onOptionsItemSelected() method
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // (9)
+        // (4)
         createShareIntent();
         // (2) return true
         return true;
@@ -84,16 +84,15 @@ public class DetailActivity extends AppCompatActivity {
     // (3) Since there is a big chunk of code to create the Intent let's do it in a separate method
     // Create a method called...
     private void createShareIntent() {
-        // (4) Create an Intent called shareIntent with action ACTION_SEND
+        // (5) Create an Intent called shareIntent with action ACTION_SEND
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        // (5) Use the Intent's setType() method to set the type to "text/plain".
+        // (6) Use the Intent's setType() method to set the type to "text/plain".
         shareIntent.setType("text/plain");
-        // (6) Use the Intent's putExtra() method to add the text we want to share.
+        // (7) Use the Intent's putExtra() method to add the text we want to share.
         // The first paramether is the type of content Intent.EXTRA_TEXT, and the second is our String ...
         shareIntent.putExtra(Intent.EXTRA_TEXT,
                 SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED);
-        // (7) We can now call startActivity() with our Intent
+        // (8) We can now call startActivity() with our Intent
         startActivity(shareIntent);
-        // (8) finally we want to go back to onOptionsItemSelected() and call the method we just wrote.
     }
 }

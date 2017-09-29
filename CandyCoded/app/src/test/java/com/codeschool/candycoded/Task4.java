@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 
 
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@PrepareForTest({AppCompatActivity.class, Intent.class, DetailActivity.class})
+@PrepareForTest({AppCompatActivity.class, Intent.class, DetailActivity.class, Method.class })
 @RunWith(PowerMockRunner.class)
 public class Task4 {
 
@@ -33,6 +33,7 @@ public class Task4 {
 
     private static DetailActivity detailActivity;
     private static boolean onOptionsItemSelected_result = false;
+    private static boolean called_createShareIntent = false;
     private static boolean created_intent = false;
     private static boolean set_type = false;
     private static boolean called_put_extra = false;
@@ -61,11 +62,7 @@ public class Task4 {
                 e.printStackTrace();
             }
 
-            try {
-                onOptionsItemSelected_result = detailActivity.onOptionsItemSelected(null);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
+            onOptionsItemSelected_result = detailActivity.onOptionsItemSelected(null);
 
             PowerMockito.verifyNew(Intent.class, Mockito.atLeastOnce()).
                     withArguments(Mockito.eq(Intent.ACTION_SEND));
@@ -74,8 +71,7 @@ public class Task4 {
             verify(intent).setType("text/plain");
             set_type = true;
 
-            verify(intent).putExtra(Intent.EXTRA_TEXT,
-                    SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED);
+            verify(intent).putExtra(Intent.EXTRA_TEXT, SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED);
             called_put_extra = true;
 
             verify(detailActivity).startActivity(Mockito.eq(intent));
@@ -83,12 +79,22 @@ public class Task4 {
 
 
         } catch (Throwable e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
     @Test
-    public void t4_1_onOptionsItemSelected_Exists() throws Exception {
+    public void test_combined() throws Exception {
+        onOptionsItemSelected_Exists();
+        assertTrue("onOptionsItemSelected() does not return true.", onOptionsItemSelected_result);
+        createShareIntent_Exists();
+        assertTrue("The Intent was not created correctly.", created_intent);
+        assertTrue("The Intent's type needs to be set with setType().", set_type);
+        assertTrue("Send extra data with the Intent with putExtra().", called_put_extra);
+        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
+    }
+
+    public void onOptionsItemSelected_Exists() throws Exception {
         Class<?> myClass = null;
 
         try {
@@ -96,50 +102,23 @@ public class Task4 {
                     .getMethod("onOptionsItemSelected", MenuItem.class)
                     .getDeclaringClass();
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
-        assertEquals(myClass, DetailActivity.class);
+        assertEquals("onOptionsItemSelected() method doesn't exist in DetailActivity class.",
+                myClass, DetailActivity.class);
     }
 
-    @Test
-    public void t4_2_onOptionsItemSelected_Result() throws Exception {
-        assertTrue(onOptionsItemSelected_result);
-    }
-
-    @Test
-    public void t4_3_createShareIntent_Exists() throws Exception {
+    public void createShareIntent_Exists() throws Exception {
         Method myMethod = null;
 
         try {
             myMethod =  DetailActivity.class.getDeclaredMethod("createShareIntent");
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
-        assertNotNull(myMethod);
+        assertNotNull("createShareIntent() method doesn't exist in DetailActivity class.", myMethod);
     }
-
-    @Test
-    public void t3_2_createIntent() throws Exception {
-        assertTrue(created_intent);
-    }
-
-    @Test
-    public void t3_3_setType() throws Exception {
-        assertTrue(set_type);
-    }
-
-    @Test
-    public void t3_4_callPutExtra() throws Exception {
-        assertTrue(called_put_extra);
-    }
-
-    @Test
-    public void t3_4_no_startActivity_call() {
-        assertTrue(called_startActivity_correctly);
-    }
-
-
 }
 
