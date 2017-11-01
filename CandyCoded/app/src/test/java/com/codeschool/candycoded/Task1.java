@@ -16,6 +16,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class Task1 {
     private static MainActivity activity;
 
-    private static boolean onOptionsItemSelected_result = false;
+    private static boolean onOptionsItemSelected_result = true;
     private static boolean called_Intent = false;
     private static boolean called_Intent_correctly = false;
     private static boolean called_startActivity = false;
@@ -90,7 +91,7 @@ public class Task1 {
     @Test
     public void test_combined() throws Exception {
         onOptionsItemSelected_Exists();
-        assertTrue("onOptionsItemSelected() does not return true.", onOptionsItemSelected_result);
+        assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
         assertTrue("The Intent was not created.", called_Intent);
         assertTrue("The Intent was created but with the wrong parameters.", called_Intent_correctly);
         assertTrue("The method startActivity() was not called.", called_startActivity);

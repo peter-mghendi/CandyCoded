@@ -16,6 +16,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -32,7 +33,7 @@ public class Task4 {
     public static final String mCandyImageUrl = "";
 
     private static DetailActivity detailActivity;
-    private static boolean onOptionsItemSelected_result = false;
+    private static boolean onOptionsItemSelected_result = true;
     private static boolean called_createShareIntent = false;
     private static boolean created_intent = false;
     private static boolean set_type = false;
@@ -86,7 +87,7 @@ public class Task4 {
     @Test
     public void test_combined() throws Exception {
         onOptionsItemSelected_Exists();
-        assertTrue("onOptionsItemSelected() does not return true.", onOptionsItemSelected_result);
+        assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
         createShareIntent_Exists();
         assertTrue("The Intent was not created correctly.", created_intent);
         assertTrue("The Intent's type needs to be set with setType().", set_type);
