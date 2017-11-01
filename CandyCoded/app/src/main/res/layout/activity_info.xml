@@ -43,7 +43,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
-        android:text="(407)555-1234"
+        android:text="(012)345-6789"
         android:textColor="?android:attr/actionMenuTextColor"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/text_view_address"
