@@ -11,6 +11,7 @@ http://www.viddler.com/v/a2575089
 
 ## Download and Import the Android Studio Project
 https://github.com/pluralsight-projects/AndroidProject
+
 http://www.viddler.com/v/5fd51d49
 
 ## Run the Android Studio Project on an Emulator
