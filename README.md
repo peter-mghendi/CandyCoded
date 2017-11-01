@@ -5,6 +5,9 @@ This project adds Explicit and Implicit Intents to the sample app for the Super 
 
 It's your job to add 4 more Intents to finish the functionality for the app!
 
+## What We're Building Overview Video
+http://www.viddler.com/v/a2575089
+
 ## Task 1 - Show Store Information Activity
 
 ![GitHub Logo](/images/InfoIntent.png)
