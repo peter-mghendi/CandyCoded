@@ -8,7 +8,13 @@ It's your job to add 4 more Intents to finish the functionality for the app!
 ## What We're Building Overview Video
 http://www.viddler.com/v/a2575089
 
-## Task 1 - Show Store Information Activity
+
+## Download and Import the Android Studio Project
+https://github.com/pluralsight-projects/AndroidProject
+http://www.viddler.com/v/5fd51d49
+
+## Run the Android Studio Project on an Emulator
+http://www.viddler.com/v/65700ff2
 
 ![GitHub Logo](/images/InfoIntent.png)
 
