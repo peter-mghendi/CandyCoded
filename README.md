@@ -20,7 +20,7 @@ We have already added an Information MenuItem to the MainActivity. Now we'd like
 ![GitHub Logo](/images/MapIntent.png)
 
 Our InfoActivy has a TextView with the address of our store.  We want to launch Google Maps at that address when that TextView is clicked.
-1. In `InfoActivity.java`, create a method called `public void createMapIntent(View view)`.
+1. In `InfoActivity.java`, create a method called `public void createMapIntent(View view)`.  This is the method we'll attach to the Click Listener on the TextView later.
 2. Create a `Uri` from the address by calling the `Uri.parse()` method and passing in the String with the geo location of our store `"geo:0,0?q=618 E South St Orlando, FL 32801"`.
 3. Create an `Intent` called `mapIntent` and pass two parameters to the constructor - first is the action which will be `Intent.ACTION_VIEW`, second is the Uri we just created.
 4. Make the Intent explicit by setting the Google Maps package. We can do this with the Intent's `setPackage()` method and pass in the String `"com.google.android.apps.maps"`.
@@ -33,7 +33,7 @@ Our InfoActivy has a TextView with the address of our store.  We want to launch 
 ![GitHub Logo](/images/PhoneIntent.png)
 
 Our InfoActivity also has a TextView with the phone number of our store.  We want to launch a dial Intent with that phone number when that TextView is clicked.
-1. In `InfoActivity.java`, create a method called `public void createPhoneIntent(View view)`.
+1. In `InfoActivity.java`, create a method called `public void createPhoneIntent(View view)`.  This is the method we'll attach to the Click Listener on the TextView later.
 2. Create an `Intent` with action `Intent.ACTION_DIAL`.
 3. Use the Intent `setData()` method and pass in a `URI` of the telephone number `"tel:0123456789"`. You can create a `URI` with the `Uri.parse()` method.
 4. Start the Activity with the Intent.
