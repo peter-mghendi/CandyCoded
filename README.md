@@ -10,8 +10,8 @@ It's your job to add 4 more Intents to finish the functionality for the app!
 ![GitHub Logo](/images/InfoIntent.png)
 
 We have already added an Information MenuItem to the MainActivity. Now we'd like to launch the InfoActivy class when that MenuItem is selected.
-1. We want to override the `onOptionsItemSelected(MenuItem item)` method in `MainActivity.java`.  This is where will create the Intent to open the InfoActivity.  Use the `@Override` declarator before the method declaration, also make it `public` and return a `boolean` type.  
-2. Our method needs to return a boolean, we will `return true` to mean that we launched our Intent.
+1. We want to override the `onOptionsItemSelected(MenuItem item)` method in `MainActivity.java`.  This is where will create the Intent to open the InfoActivity. (Hint: Ctrl+O will list the Overrride methods.  Then, type in the box to search and select the one you want.)
+2. Our method needs to return a boolean, we will return the default call to the super class `return super.onOptionsItemSelected(item);`.
 3. On the first line of the `onOptionsItemSelected()` method, create the Intent for launching the InfoActivity.  Call the `Intent infoIntent` and the two parameters to the `new Intent()` constructor will be `this` for the Context and `InfoActivity.class` for the Activity we want to start.
 3. Next, call `startActivity()` with the `infoIntent` as a parameter to start our Intent.
 
@@ -20,7 +20,7 @@ We have already added an Information MenuItem to the MainActivity. Now we'd like
 ![GitHub Logo](/images/MapIntent.png)
 
 Our InfoActivy has a TextView with the address of our store.  We want to launch Google Maps at that address when that TextView is clicked.
-1. Create a method called `public void createMapIntent(View view)` in `InfoActivity.java`.
+1. In `InfoActivity.java`, create a method called `public void createMapIntent(View view)`.
 2. Create a `Uri` from the address by calling the `Uri.parse()` method and passing in the String with the geo location of our store `"geo:0,0?q=618 E South St Orlando, FL 32801"`.
 3. Create an `Intent` called `mapIntent` and pass two parameters to the constructor - first is the action which will be `Intent.ACTION_VIEW`, second is the Uri we just created.
 4. Make the Intent explicit by setting the Google Maps package. We can do this with the Intent's `setPackage()` method and pass in the String `"com.google.android.apps.maps"`.
@@ -44,11 +44,11 @@ Our InfoActivity also has a TextView with the phone number of our store.  We wan
 ![GitHub Logo](/images/ShareIntent.png)
 
 We have already added a Share MenuItem to the DetailActivity so that the user can share the selected Candy. We can do that by launching an Intent with action ACTION_SEND when that MenuItem is selected.
-1. Override the `public boolean onOptionsItemSelected(MenuItem item)` method and have it `return true` to mean success for now.
+1. Override the `public boolean onOptionsItemSelected(MenuItem item)` method and have it return the default call to the super class `return super.onOptionsItemSelected(item);`.  (Hint: Ctrl+O will list the Overrride methods.  Then, type in the box to search and select the one you want.)
 2. Since there is a big chunk of code to create the Intent let's do it in a separate method. Create a method called `private void createShareIntent()`.
-3. In `onOptionsItemSelected()`, call the method we just wrote `createShareIntent()`.
-4. Create an Intent called `shareIntent` with action `ACTION_SEND`.
+3. In `onOptionsItemSelected()`, let's call the method we just wrote `createShareIntent()`.
+4. Now inside our new `createShareIntent()` method, let's create an Intent called `shareIntent` with action `ACTION_SEND`.
 5. Use the Intent's `setType()` method to set the type to `"text/plain"`.
 6. To create the String that we want to share, we can use the String variables created at the top of this file - `SHARE_DESCRIPTION`, `mCandyImageUrl`, and `HASHTAG_CANDYCODED`.  We can concatenate them into one String variable set equal to `SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED`
 7. Use the Intent's `putExtra()` method to add the text we want to share. The first parameter is the type of content `Intent.EXTRA_TEXT`, and the second is our concatenated `String`.
-8. We can now call `startActivity()` with our `shareIntent`.
+8. Finally, we can finish off the `createShareIntent()` method by calling `startActivity()` with our `shareIntent`.
