@@ -8,10 +8,16 @@ It's your job to add 4 more Intents to finish the functionality for the app!
 ## What We're Building Overview Video
 http://www.viddler.com/v/a2575089
 
+## Installing Android Studio
+http://www.viddler.com/v/9e00d024
+
 ## Download and Import the Android Studio Project
 https://github.com/pluralsight-projects/AndroidProject
 
 http://www.viddler.com/v/5fd51d49
+
+## Downloading the Project's Android SDK Version
+TBD
 
 ## How to Run the Android Studio Project on an Emulator
 http://www.viddler.com/v/65700ff2
