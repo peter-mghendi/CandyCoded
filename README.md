@@ -60,12 +60,12 @@ Our InfoActivity also has a TextView with the phone number of our store.  We wan
 
 ![GitHub Logo](/images/ShareIntent.png)
 
-We have already added a Share MenuItem to the DetailActivity so that the user can share the selected Candy. We can do that by launching an Intent with action ACTION_SEND when that MenuItem is selected.
+We have already added a Share MenuItem to the DetailActivity so that the user can share the selected Candy. Now we need to add the functionality to launch an Intent with action ACTION_SEND when that MenuItem is selected.
 1. Override the `public boolean onOptionsItemSelected(MenuItem item)` method and have it return the default call to the super class `return super.onOptionsItemSelected(item);`.  (Hint: Ctrl+O will list the Overrride methods.  Then, type in the box to search and select the one you want.)
 2. Since there is a big chunk of code to create the Intent let's do it in a separate method. Create a method called `private void createShareIntent()`.
 3. In `onOptionsItemSelected()`, let's call the method we just wrote `createShareIntent()`.
 4. Now inside our new `createShareIntent()` method, let's create an Intent called `shareIntent` with action `ACTION_SEND`.
 5. Use the Intent's `setType()` method to set the type to `"text/plain"`.
-6. To create the String that we want to share, we can use the String variables created at the top of this file - `SHARE_DESCRIPTION`, `mCandyImageUrl`, and `HASHTAG_CANDYCODED`.  We can concatenate them into one String variable set equal to `SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED`
+6. To create the String that we want to share, we can use the String variables created at the top of this file - `SHARE_DESCRIPTION`, `mCandyImageUrl`, and `HASHTAG_CANDYCODED`.  We can concatenate them into one String variable set equal to `SHARE_DESCRIPTION + mCandyImageUrl + HASHTAG_CANDYCODED`.
 7. Use the Intent's `putExtra()` method to add the text we want to share. The first parameter is the type of content `Intent.EXTRA_TEXT`, and the second is our concatenated `String`.
 8. Finally, we can finish off the `createShareIntent()` method by calling `startActivity()` with our `shareIntent`.
