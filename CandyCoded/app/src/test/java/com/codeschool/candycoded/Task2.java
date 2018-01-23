@@ -114,11 +114,11 @@ public class Task2 {
     @Test
     public void test_combined() throws Exception {
         createMapIntent_Exists();
-        assertTrue("The Uri for the map location wasn't created.", called_uri_parse);
-        assertTrue("The Intent was not created correctly.", created_intent);
-        assertTrue("The package was not set for the Intent.", set_package);
-        assertTrue("The method resolveActivity() needs to be called.", resolve_activity);
-        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
+        assertTrue("@make-uri-address", called_uri_parse);
+        assertTrue("@create-actionview-map-intent", created_intent);
+        assertTrue("@map-intent-set-package", set_package);
+        assertTrue("@map-intent-handler-exists", resolve_activity);
+        assertTrue("@map-intent-start-activity", called_startActivity_correctly);
         test_xml();
     }
 
@@ -132,7 +132,7 @@ public class Task2 {
             //e.printStackTrace();
         }
 
-        assertNotNull("createMapIntent() method doesn't exist in InfoActivity class.", myMethod);
+        assertNotNull("@make-createmapintent-method", myMethod);
     }
 
 
@@ -143,8 +143,7 @@ public class Task2 {
                 new XMLTestHelpers.ViewContainer("@+id/text_view_address", "createMapIntent", "true");
         boolean address_set_correct =  viewContainers.contains(addressView);
 
-        Assert.assertTrue("In activity_info.xml, the TextView text_view_address does not have " +
-                        "the clickable and onClick properties set.",
+        Assert.assertTrue("@map-textview-click-handler",
                 address_set_correct);
     }
 

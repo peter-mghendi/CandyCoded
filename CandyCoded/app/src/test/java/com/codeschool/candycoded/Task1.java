@@ -91,10 +91,10 @@ public class Task1 {
     @Test
     public void test_combined() throws Exception {
         onOptionsItemSelected_Exists();
-        assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
-        assertTrue("The Intent was not created.", called_Intent);
-        assertTrue("The Intent was created but with the wrong parameters.", called_Intent_correctly);
-        assertTrue("The method startActivity() was not called.", called_startActivity);
+        assertFalse("@override-mainactivity-onoptionitemselected", onOptionsItemSelected_result);
+        assertTrue("@mainactivity-onoptionitemselected-return-super", called_Intent);
+        assertTrue("@create-intent-infoactivity", called_Intent_correctly);
+        assertTrue("@startactivity-infoactivity", called_startActivity);
     }
 
     public void onOptionsItemSelected_Exists() throws Exception {

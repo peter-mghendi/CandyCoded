@@ -95,10 +95,11 @@ public class Task3 {
     @Test
     public void test_combined() throws Exception {
         createPhoneIntent_Exists();
-        assertTrue("The Intent was not created correctly.", created_intent);
-        assertTrue("The Uri for the phone wasn't created.", called_uri_parse);
-        assertTrue("The data was not set for the Intent.", set_data);
-        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
+        assertTrue("@create-actiondial-phone-intent", created_intent);
+        // Both of the following asserts have the same tag, should we separate?
+        assertTrue("@phone-intent-set-data", called_uri_parse);
+        assertTrue("@phone-intent-set-data", set_data);
+        assertTrue("@phone-intent-start-activity", called_startActivity_correctly);
         test_xml();
     }
 
@@ -112,7 +113,7 @@ public class Task3 {
             //e.printStackTrace();
         }
 
-        assertNotNull("createPhoneIntent() method doesn't exist in InfoActivity class.", myMethod);
+        assertNotNull("@make-createphoneintent-method", myMethod);
     }
 
     public void test_xml() throws Exception {
@@ -121,8 +122,7 @@ public class Task3 {
                 new XMLTestHelpers.ViewContainer("@+id/text_view_phone", "createPhoneIntent", "true");
         boolean address_set_correct =  viewContainers.contains(addressView);
 
-        Assert.assertTrue("In activity_info.xml, the TextView text_view_phone does not have " +
-                        "the clickable and onClick properties set.",
+        Assert.assertTrue("@phone-textview-click-handler",
                 address_set_correct);
     }
 

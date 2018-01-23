@@ -16,7 +16,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.lang.reflect.Method;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -87,12 +86,14 @@ public class Task4 {
     @Test
     public void test_combined() throws Exception {
         onOptionsItemSelected_Exists();
-        assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
+        // Missing a tag for the below test
+        //assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
+        // Missing a test to verify createShareIntent() was called - @call-createshareintent
         createShareIntent_Exists();
-        assertTrue("The Intent was not created correctly.", created_intent);
-        assertTrue("The Intent's type needs to be set with setType().", set_type);
-        assertTrue("Send extra data with the Intent with putExtra().", called_put_extra);
-        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
+        assertTrue("@share-intent-actionsend", created_intent);
+        assertTrue("@share-intent-settype", set_type);
+        assertTrue("@share-intent-putextra", called_put_extra);
+        assertTrue("@share-intent-startactivity", called_startActivity_correctly);
     }
 
     public void onOptionsItemSelected_Exists() throws Exception {
@@ -106,7 +107,7 @@ public class Task4 {
             //e.printStackTrace();
         }
 
-        assertEquals("onOptionsItemSelected() method doesn't exist in DetailActivity class.",
+        assertEquals("@override-detailactivity-onoptionitemselected",
                 myClass, DetailActivity.class);
     }
 
@@ -119,7 +120,7 @@ public class Task4 {
             //e.printStackTrace();
         }
 
-        assertNotNull("createShareIntent() method doesn't exist in DetailActivity class.", myMethod);
+        assertNotNull("@make-createshareintent-method", myMethod);
     }
 }
 
