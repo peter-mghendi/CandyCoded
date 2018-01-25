@@ -83,7 +83,7 @@ public class Task1 {
             Mockito.verify(activity).startActivity(Mockito.eq(intent));
             called_startActivity = true;
 
-        }catch (Throwable e) {
+        } catch (Throwable e) {
             //e.printStackTrace();
         }
     }
@@ -114,7 +114,7 @@ public class Task1 {
         Class<?> myClass = null;
 
         try {
-            myClass =  MainActivity.class
+            myClass = MainActivity.class
                     .getMethod("onOptionsItemSelected", MenuItem.class)
                     .getDeclaringClass();
         } catch (NoSuchMethodException e) {
@@ -127,3 +127,4 @@ public class Task1 {
         assertEquals("onOptionsItemSelected() method doesn't exist in MainActivity class.",
                 myClass, MainActivity.class);
     }
+}
