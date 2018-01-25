@@ -93,16 +93,28 @@ public class Task3 {
     }
 
     @Test
-    public void test_combined() throws Exception {
+    public void create_actiondial_phone_intent() throws Exception {
         createPhoneIntent_Exists();
-        assertTrue("@create-actiondial-phone-intent", created_intent);
-        // Both of the following asserts have the same tag, should we separate?
-        assertTrue("@phone-intent-set-data", called_uri_parse);
-        assertTrue("@phone-intent-set-data", set_data);
-        assertTrue("@phone-intent-start-activity", called_startActivity_correctly);
+        assertTrue("The Intent was not created correctly.", created_intent);
         test_xml();
     }
 
+    @Test
+    public void phone_intent_set_data() throws Exception {
+        createPhoneIntent_Exists();
+        assertTrue("The Uri for the phone wasn't created.", called_uri_parse);
+        assertTrue("The data was not set for the Intent.", set_data);
+        test_xml();
+    }
+
+    @Test
+    public void phone_intent_start_activity() throws Exception {
+        createPhoneIntent_Exists();
+        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
+        test_xml();
+    }
+
+    @Test
     public void createPhoneIntent_Exists() throws Exception {
         Method myMethod = null;
 
@@ -113,16 +125,18 @@ public class Task3 {
             //e.printStackTrace();
         }
 
-        assertNotNull("@make-createphoneintent-method", myMethod);
+        assertNotNull("createPhoneIntent() method doesn't exist in InfoActivity class.", myMethod);
     }
 
+    @Test
     public void test_xml() throws Exception {
         ArrayList<XMLTestHelpers.ViewContainer> viewContainers = readLayoutXML(LAYOUT_XML_FILE);
         XMLTestHelpers.ViewContainer addressView =
                 new XMLTestHelpers.ViewContainer("@+id/text_view_phone", "createPhoneIntent", "true");
         boolean address_set_correct =  viewContainers.contains(addressView);
 
-        Assert.assertTrue("@phone-textview-click-handler",
+        Assert.assertTrue("In activity_info.xml, the TextView text_view_phone does not have " +
+                        "the clickable and onClick properties set.",
                 address_set_correct);
     }
 
