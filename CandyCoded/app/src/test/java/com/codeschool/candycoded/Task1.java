@@ -89,15 +89,26 @@ public class Task1 {
     }
 
     @Test
-    public void test_combined() throws Exception {
-        onOptionsItemSelected_Exists();
-        assertFalse("@override-mainactivity-onoptionitemselected", onOptionsItemSelected_result);
-        assertTrue("@mainactivity-onoptionitemselected-return-super", called_Intent);
-        assertTrue("@create-intent-infoactivity", called_Intent_correctly);
-        assertTrue("@startactivity-infoactivity", called_startActivity);
+    public void mainactivity_onoptionitemselected_return_super() throws Exception {
+        override_mainactivity_onoptionitemselected();
+        assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
     }
 
-    public void onOptionsItemSelected_Exists() throws Exception {
+    @Test
+    public void create_intent_infoactivity() throws Exception {
+        override_mainactivity_onoptionitemselected();
+        assertTrue("The Intent was not created.", called_Intent);
+        assertTrue("The Intent was created but with the wrong parameters. @intent-infoactivity", called_Intent_correctly);
+    }
+
+    @Test
+    public void startactivity_infoactivity() throws Exception {
+        override_mainactivity_onoptionitemselected();
+        assertTrue("The method startActivity() was not called.", called_startActivity);
+    }
+
+    @Test
+    public void override_mainactivity_onoptionitemselected() throws Exception {
         // Determine if the method OnOptionsItemSelected() is implemented in MainActivity
         // or just in the Base class
         Class<?> myClass = null;
@@ -111,6 +122,8 @@ public class Task1 {
         }
 
         assertEquals("onOptionsItemSelected() method doesn't exist in MainActivity class.",
-                     myClass, MainActivity.class);
+                myClass, MainActivity.class);
+
+        assertEquals("onOptionsItemSelected() method doesn't exist in MainActivity class.",
+                myClass, MainActivity.class);
     }
-}

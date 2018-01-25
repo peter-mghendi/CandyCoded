@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -84,16 +85,52 @@ public class Task4 {
     }
 
     @Test
-    public void test_combined() throws Exception {
+    public void onOptionsItemSelected_call_super() throws Exception {
         onOptionsItemSelected_Exists();
-        // Missing a tag for the below test
-        //assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
-        // Missing a test to verify createShareIntent() was called - @call-createshareintent
         createShareIntent_Exists();
-        assertTrue("@share-intent-actionsend", created_intent);
-        assertTrue("@share-intent-settype", set_type);
-        assertTrue("@share-intent-putextra", called_put_extra);
-        assertTrue("@share-intent-startactivity", called_startActivity_correctly);
+        assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
+    }
+
+    @Test
+    public void call_createshareintent() throws Exception {
+        onOptionsItemSelected_Exists();
+        createShareIntent_Exists();
+        // Missing a test to verify createShareIntent() was called - @call-createshareintent
+    }
+
+    @Test
+    public void concatenate_share_string() throws Exception {
+        onOptionsItemSelected_Exists();
+        createShareIntent_Exists();
+        // Missing a test for: "Concatenate the String to Share"- @concatenate-share-string
+    }
+
+    @Test
+    public void share_intent_actionsend() throws Exception {
+        onOptionsItemSelected_Exists();
+        createShareIntent_Exists();
+        assertTrue("The Intent was not created correctly.", created_intent);
+    }
+
+    @Test
+    public void share_intent_settype() throws Exception {
+        onOptionsItemSelected_Exists();
+        createShareIntent_Exists();
+        assertTrue("The Intent's type needs to be set with setType().", set_type);
+    }
+
+    @Test
+    public void share_intent_putextra() throws Exception {
+        onOptionsItemSelected_Exists();
+        createShareIntent_Exists();
+        assertTrue("Send extra data with the Intent with putExtra().", called_put_extra);
+    }
+
+    @Test
+    public void share_intent_startactivity() throws Exception {
+        onOptionsItemSelected_Exists();
+        createShareIntent_Exists();
+        assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
     }
 
     public void onOptionsItemSelected_Exists() throws Exception {
@@ -107,7 +144,7 @@ public class Task4 {
             //e.printStackTrace();
         }
 
-        assertEquals("@override-detailactivity-onoptionitemselected",
+        assertEquals("onOptionsItemSelected() method doesn't exist in DetailActivity class.",
                 myClass, DetailActivity.class);
     }
 
@@ -120,7 +157,7 @@ public class Task4 {
             //e.printStackTrace();
         }
 
-        assertNotNull("@make-createshareintent-method", myMethod);
+        assertNotNull("reateShareIntent() method doesn't exist in DetailActivity class.", myMethod);
     }
 }
 
