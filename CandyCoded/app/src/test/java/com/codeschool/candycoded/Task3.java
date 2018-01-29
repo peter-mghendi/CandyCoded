@@ -96,7 +96,6 @@ public class Task3 {
     public void create_actiondial_phone_intent() throws Exception {
         createPhoneIntent_Exists();
         assertTrue("The Intent was not created correctly.", created_intent);
-        test_xml();
     }
 
     @Test
@@ -104,14 +103,12 @@ public class Task3 {
         createPhoneIntent_Exists();
         assertTrue("The Uri for the phone wasn't created.", called_uri_parse);
         assertTrue("The data was not set for the Intent.", set_data);
-        test_xml();
     }
 
     @Test
     public void phone_intent_start_activity() throws Exception {
         createPhoneIntent_Exists();
         assertTrue("The method startActivity() was not called.", called_startActivity_correctly);
-        test_xml();
     }
 
     @Test
