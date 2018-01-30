@@ -1,4 +1,4 @@
-package com.codeschool.candycoded.DB;
+package com.pluralsight.candycoded.DB;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

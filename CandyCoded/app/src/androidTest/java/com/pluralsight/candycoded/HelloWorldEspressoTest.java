@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;

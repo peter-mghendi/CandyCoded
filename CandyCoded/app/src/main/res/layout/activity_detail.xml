@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codeschool.candycoded.DetailActivity">
+    tools:context="com.pluralsight.candycoded.DetailActivity">
 
     <ImageView
         android:id="@+id/image_view_candy"

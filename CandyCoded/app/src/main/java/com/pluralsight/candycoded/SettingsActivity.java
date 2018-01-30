@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

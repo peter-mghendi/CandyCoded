@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

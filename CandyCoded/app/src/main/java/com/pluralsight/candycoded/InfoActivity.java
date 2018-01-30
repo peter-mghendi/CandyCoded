@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import android.net.Uri;
 import android.os.Bundle;

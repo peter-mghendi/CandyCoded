@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.codeschool.candycoded.DB.CandyContract.CandyEntry;
-import com.codeschool.candycoded.DB.CandyCursorAdapter;
-import com.codeschool.candycoded.DB.CandyDbHelper;
+import com.pluralsight.candycoded.DB.CandyContract.CandyEntry;
+import com.pluralsight.candycoded.DB.CandyCursorAdapter;
+import com.pluralsight.candycoded.DB.CandyDbHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;

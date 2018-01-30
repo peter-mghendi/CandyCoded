@@ -1,4 +1,4 @@
-package com.codeschool.candycoded.DB;
+package com.pluralsight.candycoded.DB;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.codeschool.candycoded.R;
+import com.pluralsight.candycoded.R;
 
 
 public class CandyCursorAdapter extends CursorAdapter {

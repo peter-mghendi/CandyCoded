@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,9 +10,9 @@ import android.view.MenuInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codeschool.candycoded.DB.CandyContract;
-import com.codeschool.candycoded.DB.CandyContract.CandyEntry;
-import com.codeschool.candycoded.DB.CandyDbHelper;
+import com.pluralsight.candycoded.DB.CandyContract;
+import com.pluralsight.candycoded.DB.CandyContract.CandyEntry;
+import com.pluralsight.candycoded.DB.CandyDbHelper;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.codeschool.candycoded;
+package com.pluralsight.candycoded;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

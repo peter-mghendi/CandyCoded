@@ -1,4 +1,4 @@
-package com.codeschool.candycoded.DB;
+package com.pluralsight.candycoded.DB;
 
 import android.provider.BaseColumns;
 
