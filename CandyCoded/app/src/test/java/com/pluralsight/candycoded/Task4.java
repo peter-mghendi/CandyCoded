@@ -102,6 +102,7 @@ public class Task4 {
 
     @Test
     public void onOptionsItemSelected_call_super() throws Exception {
+        onOptionsItemSelected_Exists();
         assertFalse("onOptionsItemSelected() does not return call to super.", onOptionsItemSelected_result);
     }
 
