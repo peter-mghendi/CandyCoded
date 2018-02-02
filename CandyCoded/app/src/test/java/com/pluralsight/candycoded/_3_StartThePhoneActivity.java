@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @PrepareForTest({AppCompatActivity.class, Intent.class, Uri.class, InfoActivity.class})
 @RunWith(PowerMockRunner.class)
-public class Task3 {
+public class _3_StartThePhoneActivity {
 
     public static final String LAYOUT_XML_FILE = "res/layout/activity_info.xml";
     private static InfoActivity infoActivity;

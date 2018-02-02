@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @PrepareForTest({AppCompatActivity.class, Intent.class, DetailActivity.class, Method.class })
 @RunWith(PowerMockRunner.class)
-public class Task4 {
+public class _4_ShareACandyWithAnIntent {
 
     public static final String SHARE_DESCRIPTION = "Look at this delicious candy from Candy Coded - ";
     public static final String HASHTAG_CANDYCODED = " #candycoded";
