@@ -8,8 +8,8 @@ ADD ./CandyCoded/app/build.gradle ${APP_DIR}/CandyCoded
 
 WORKDIR $APP_DIR
 
-COPY . .
+COPY ./CandyCoded .
 
-RUN ./CandyCoded/gradlew --parallel testDebug -p */app | :
+RUN ./gradlew --parallel testDebug -p ./app | :
 
 CMD ["sh"]
