@@ -6,7 +6,7 @@ RUN mkdir -p $APP_DIR
 
 WORKDIR $APP_DIR
 
-COPY ./CandyCoded .
+COPY . .
 
 ENTRYPOINT ["bash"]
 
